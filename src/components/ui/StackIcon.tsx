@@ -1,35 +1,64 @@
+"use client";
+
+import { useState } from "react";
 import type { StackItem } from "@/types";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface StackIconProps {
   item: StackItem;
 }
 
 export default function StackIcon({ item }: StackIconProps) {
+  const { lang } = useLanguage();
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <div
-      className={`group relative flex flex-col items-center gap-3 rounded-xl border border-tinta/10 bg-white/40 p-5 backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-celeste/40 hover:bg-white/80 hover:shadow-lg dark:border-crema/10 dark:bg-tinta/40 dark:hover:bg-tinta/80 ${
-        item.status === "learning" ? "opacity-75" : ""
-      }`}
+    <div 
+      className="flex flex-col items-center justify-center gap-3 p-4 rounded-xl border border-white/5 bg-white/[0.01] transition-all duration-300 cursor-default"
+      style={{
+        borderColor: isHovered ? `${item.color}50` : undefined,
+        backgroundColor: isHovered ? `${item.color}15` : undefined,
+        boxShadow: isHovered ? `0 0 20px ${item.color}20` : undefined,
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Ícono SVG con rebote suave */}
-      <img
-        src={`/icons/${item.icon}.svg`}
-        alt=""
-        aria-hidden="true"
-        className="h-10 w-10 text-tinta transition-transform duration-300 group-hover:scale-110 dark:text-crema"
-      />
-
-      {/* Nombre */}
-      <span className="text-sm font-semibold tracking-wide text-tinta/80 dark:text-crema/80">
-        {item.name}
-      </span>
-
-      {/* Badge "Aprendiendo" más estilizado */}
-      {item.status === "learning" && (
-        <span className="absolute -top-2 -right-2 rounded-full bg-celeste px-2 py-0.5 text-[10px] font-bold text-white shadow-sm">
-          LEARNING
-        </span>
-      )}
+      <div className="w-8 h-8 flex items-center justify-center relative">
+        <img
+          src={`/icons/${item.icon}.svg`}
+          alt=""
+          aria-hidden="true"
+          className={`absolute inset-0 w-full h-full object-contain filter grayscale transition-opacity duration-300 ${isHovered ? 'opacity-0' : 'opacity-60'}`}
+        />
+        <div 
+          className={`absolute inset-0 transition-opacity duration-300 ${isHovered ? 'opacity-100 scale-110' : 'opacity-0 scale-100'}`}
+          style={{
+            backgroundColor: item.color || '#ffffff',
+            WebkitMaskImage: `url(/icons/${item.icon}.svg)`,
+            WebkitMaskSize: "contain",
+            WebkitMaskRepeat: "no-repeat",
+            WebkitMaskPosition: "center",
+            maskImage: `url(/icons/${item.icon}.svg)`,
+            maskSize: "contain",
+            maskRepeat: "no-repeat",
+            maskPosition: "center",
+          }}
+        />
+      </div>
+      
+      <div className="text-center z-10">
+        <p 
+          className="text-[11px] font-medium transition-colors duration-300"
+          style={{ color: isHovered ? item.color : '#a1a1aa' }}
+        >
+          {item.name}
+        </p>
+        {item.status === "learning" && (
+          <p className="text-[9px] text-zinc-600 uppercase tracking-widest mt-1">
+            {lang === "es" ? "Aprendiendo" : "Learning"}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

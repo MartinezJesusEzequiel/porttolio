@@ -1,60 +1,76 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-crema: #fdf6ed;
-  --color-tinta: #1c1c1c;
-  --color-celeste: #5b8db8;
-  --color-tierra: #a0845c;
-
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-
-  --animate-fade-in-up: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  --animate-float: float 8s ease-in-out infinite;
-  --animate-float-delayed: float 8s ease-in-out 4s infinite;
-  --animate-gradient: gradient 6s linear infinite;
+  --color-bg: #000000;
+  --color-fg: #FAFAFA;
+  --color-muted: #A1A1AA;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-accent: #FFFFFF;
+  
+  --font-sans: var(--font-sans), system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 :root {
-  --background: var(--color-crema);
-  --foreground: var(--color-tinta);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: var(--color-tinta);
-    --foreground: var(--color-crema);
-  }
+  --background: var(--color-bg);
+  --foreground: var(--color-fg);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
-  position: relative;
+  font-family: var(--font-sans);
 }
 
-/* Patrón de puntos sutil en el fondo */
-body::before {
-  content: "";
-  position: fixed;
+/* Tech Grid Background */
+.bg-grid-pattern {
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+  position: absolute;
   inset: 0;
-  z-index: -10;
-  background-image: radial-gradient(var(--foreground) 1px, transparent 1px);
-  background-size: 32px 32px;
-  opacity: 0.05;
+  z-index: -2;
   pointer-events: none;
 }
 
+/* Base Bento Card Style */
+.bento-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  backdrop-filter: blur(12px);
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.bento-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Gradient Text utility */
+.text-gradient {
+  background: linear-gradient(to right, #FFFFFF, #71717A);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 @keyframes fade-in-up {
-  0% {
+  from {
     opacity: 0;
     transform: translateY(20px);
   }
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes float {
@@ -77,4 +93,54 @@ body::before {
   100% {
     background-position: 0% 50%;
   }
+}
+
+/* Ambient Psychedelic Blobs */
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(80px, -120px) scale(1.2); }
+  66% { transform: translate(-80px, 80px) scale(0.8); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+.animate-blob {
+  animation: blob 12s infinite ease-in-out alternate;
+}
+
+.animation-delay-2000 {
+  animation-delay: 3s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 6s;
+}
+
+/* Custom Scrollbar for horizontal scrolling */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Infinite Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 35s linear infinite;
+}
+
+.pause-animation {
+  animation-play-state: paused;
 }

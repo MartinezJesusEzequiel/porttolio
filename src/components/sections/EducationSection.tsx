@@ -1,41 +1,61 @@
-import { education } from "@/data/social-links";
+"use client";
+
+import { EducationItem } from "@/types";
 import SectionHeading from "@/components/ui/SectionHeading";
+import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
-export default function EducationSection() {
+interface EducationSectionProps {
+  education: EducationItem[];
+}
+
+export default function EducationSection({ education }: EducationSectionProps) {
+  const { t, lang } = useLanguage();
+
   return (
-    <section id="educacion" className="mx-auto max-w-4xl px-6 py-16">
-      <SectionHeading title="Educación" />
+    <section id="educacion" className="mb-24">
+      <SectionHeading title={t("education.title")} subtitle={t("education.subtitle")} />
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        {education.map((item) => (
-          <article
+      <div className="grid gap-4 sm:grid-cols-2 mt-12">
+        {education.map((item, index) => (
+          <motion.article
             key={item.title}
-            className="rounded-lg border border-tinta/5 p-6 dark:border-crema/5"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+            className="bento-card p-6 flex flex-col justify-between"
           >
-            {/* Ícono según tipo */}
-            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-celeste/10 text-celeste">
-              {item.type === "degree" ? (
-                <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current" aria-hidden="true">
-                  <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z" />
-                </svg>
-              ) : (
-                <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current" aria-hidden="true">
-                  <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
-                </svg>
+            <div>
+              <div className="flex justify-between items-start mb-4">
+                <span className="text-xs font-medium text-white/50 bg-white/5 px-2.5 py-1 rounded-md tracking-wide">
+                  {item.type === "degree" ? (lang === "es" ? "Título" : "Degree") : (lang === "es" ? "Certificado" : "Certificate")}
+                </span>
+                <span className="text-sm text-zinc-500">
+                  {item.period}
+                </span>
+              </div>
+              
+              <h3 className="text-lg font-bold text-white tracking-tight mb-1">
+                {item.institution}
+              </h3>
+              <p className="text-zinc-400">
+                {lang === "es" ? item.title : (item.titleEn || item.title)}
+              </p>
+
+              {item.certificateUrl && (
+                <a 
+                  href={item.certificateUrl} 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 mt-6 text-sm font-medium text-zinc-300 hover:text-white transition-colors"
+                >
+                  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                  {lang === "es" ? "Ver Certificado" : "View Certificate"}
+                </a>
               )}
             </div>
-
-            {/* Institución */}
-            <h3 className="font-semibold">{item.institution}</h3>
-
-            {/* Título */}
-            <p className="mt-1 text-sm text-tinta/70 dark:text-crema/70">
-              {item.title}
-            </p>
-
-            {/* Período */}
-            <p className="mt-2 text-xs font-medium text-tierra">{item.period}</p>
-          </article>
+          </motion.article>
         ))}
       </div>
     </section>

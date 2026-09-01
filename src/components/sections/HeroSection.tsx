@@ -1,63 +1,61 @@
-import { socialLinks } from "@/data/social-links";
-import SocialLink from "@/components/ui/SocialLink";
+"use client";
 
-export default function HeroSection() {
+import { Profile } from "@/types";
+import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
+
+interface HeroSectionProps {
+  profile: Profile;
+}
+
+export default function HeroSection({ profile }: HeroSectionProps) {
+  const { t } = useLanguage();
+
   return (
-    <section id="inicio" className="relative mx-auto max-w-4xl px-6 pb-20 pt-32 sm:pb-32 sm:pt-48">
-      <div className="relative z-10 animate-fade-in-up">
-        {/* Badge */}
-        <p className="mb-8 inline-flex items-center gap-2 rounded-full border border-tierra/30 bg-tierra/10 px-4 py-1.5 text-xs font-semibold tracking-wide text-tierra">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-tierra opacity-75"></span>
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-tierra"></span>
-          </span>
-          Esperanza, Santa Fe
-        </p>
+    <section id="inicio" className="relative flex flex-col items-center text-center pt-20 pb-32">
+      
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8"
+      >
+        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+        <span className="text-xs font-medium text-zinc-300 tracking-wide uppercase">{t("hero.available")}</span>
+      </motion.div>
 
-        {/* Nombre y Sol de Mayo */}
-        <div className="flex items-center gap-5 sm:gap-8">
-          <h1 className="text-6xl font-extrabold tracking-tighter sm:text-7xl lg:text-8xl">
-            <span className="block text-tinta dark:text-crema">Ezequiel</span>
-            {/* APELLIDO ANIMADO */}
-            <span className="block animate-gradient bg-gradient-to-r from-celeste via-purple-400 to-celeste bg-[length:200%_auto] bg-clip-text pb-2 text-transparent">
-              Martínez
+      <motion.h1 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+        className="text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-12 max-w-4xl leading-snug md:leading-tight"
+      >
+        {t("hero.headline").split("|").map((part, i, arr) => (
+          <span key={i}>
+            <span className={i === 0 ? "text-white" : i === arr.length - 1 ? "text-gradient" : "text-zinc-300"}>
+              {part.trim()}
             </span>
-          </h1>
+            {i < arr.length - 1 && <span className="text-zinc-600 mx-2 md:mx-3">|</span>}
+          </span>
+        ))}
+      </motion.h1>
 
-          {/* El Sol de Mayo con brillo dorado y giro súper lento */}
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/8/89/Sol_de_Mayo-Bandera_de_Argentina.svg"
-            alt="Sol de Mayo"
-            className="h-16 w-16 select-none drop-shadow-[0_0_15px_rgba(251,191,36,0.5)] sm:h-24 sm:w-24 animate-[spin_40s_linear_infinite]"
-          />
-        </div>
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
+        className="flex flex-col sm:flex-row gap-4 mb-20"
+      >
+        <a href="#proyectos" className="px-8 py-3 rounded-full bg-white text-black font-medium hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+          {t("hero.viewProjects")}
+        </a>
+        <a href="/Ezequiel_Martinez_CV.pdf" download="Ezequiel_Martinez_CV.pdf" className="px-8 py-3 rounded-full border border-white/10 bg-white/5 text-white font-medium hover:bg-white/10 transition-colors flex items-center gap-2 group">
+          <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current text-zinc-400 group-hover:text-white transition-colors"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          {t("hero.downloadCv")}
+        </a>
+      </motion.div>
 
-        {/* Rol */}
-        <p className="mt-8 text-2xl font-light text-tinta/80 dark:text-crema/80 sm:text-3xl">
-          Desarrollador de Software <span className="font-semibold italic text-celeste">Backend Focus</span>
-        </p>
-
-        {/* Bio */}
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-tinta/60 dark:text-crema/60">
-          Estudiante de Desarrollo de Software con enfoque en backend. Trabajo con Python y JavaScript, y estoy creciendo en React, TypeScript y ciberseguridad. Construyo software que resuelve problemas reales de forma simple y eficaz.
-        </p>
-
-        {/* Botones Call to Action */}
-        <div className="mt-10 flex flex-wrap items-center gap-4">
-          <a
-            href="#proyectos"
-            className="rounded-full bg-celeste px-7 py-3 text-sm font-semibold text-white transition-all hover:bg-celeste/80 hover:shadow-lg hover:shadow-celeste/20"
-          >
-            Ver Proyectos
-          </a>
-          <a
-            href="#contacto"
-            className="rounded-full border border-tinta/10 bg-transparent px-7 py-3 text-sm font-semibold text-tinta transition-all hover:bg-tinta/5 dark:border-crema/20 dark:text-crema dark:hover:bg-crema/10"
-          >
-            Contacto
-          </a>
-        </div>
-      </div>
     </section>
   );
 }
+

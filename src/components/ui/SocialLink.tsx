@@ -29,18 +29,18 @@ export default function SocialLinkComponent({
       target={link.href.startsWith("mailto:") ? undefined : "_blank"}
       rel={link.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
       aria-label={link.label}
-      className={`inline-flex items-center gap-2 text-tinta/60 transition-colors hover:text-celeste dark:text-crema/60 dark:hover:text-celeste ${className}`}
+      className={`group flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors ${className}`}
     >
       <svg
         role="img"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
-        className="h-5 w-5 fill-current"
+        className="h-5 w-5 fill-current text-zinc-400 group-hover:text-white transition-colors"
         aria-hidden="true"
       >
         {iconPaths[link.icon]}
       </svg>
-      {showLabel && <span className="text-sm">{link.label}</span>}
+      {showLabel && <span className="font-medium text-sm text-zinc-300 group-hover:text-white transition-colors">{link.label}</span>}
     </a>
   );
 }

@@ -20,9 +20,8 @@ export const socialLinks: SocialLink[] = [
 
 export const navItems: NavItem[] = [
   { label: "Inicio", href: "#inicio" },
-  { label: "Stack", href: "#stack" },
   { label: "Proyectos", href: "#proyectos" },
-  { label: "Sobre mí", href: "#sobre-mi" },
+  { label: "Stack", href: "#stack" },
   { label: "Educación", href: "#educacion" },
   { label: "Contacto", href: "#contacto" },
 ];

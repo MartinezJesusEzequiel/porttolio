@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 interface SectionHeadingProps {
   title: string;
   subtitle?: string;
@@ -5,19 +9,22 @@ interface SectionHeadingProps {
 
 export default function SectionHeading({ title, subtitle }: SectionHeadingProps) {
   return (
-    <div className="relative mb-14 animate-fade-in-up">
-      {/* Acento decorativo */}
-      <div className="absolute -left-6 top-1/2 hidden h-10 w-1.5 -translate-y-1/2 rounded-r-md bg-celeste sm:block" />
-      
-      <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl text-tinta dark:text-crema">
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.5 }}
+      className="mb-12"
+    >
+      <h2 className="text-3xl font-bold text-white tracking-tight">
         {title}
       </h2>
       
       {subtitle && (
-        <p className="mt-3 text-lg text-tinta/60 dark:text-crema/60 max-w-2xl">
+        <p className="text-zinc-400 mt-2 text-sm">
           {subtitle}
         </p>
       )}
-    </div>
+    </motion.div>
   );
 }
