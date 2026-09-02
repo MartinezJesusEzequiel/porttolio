@@ -96,7 +96,10 @@ export default function StackSection({ stack }: StackSectionProps) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: "spring", duration: 0.5 }}
-              className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto custom-scrollbar bento-card p-6 md:p-10 bg-[#0a0a0a] shadow-2xl rounded-3xl z-10"
+              className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto custom-scrollbar bento-card p-6 md:p-10 shadow-2xl rounded-3xl z-10 overflow-hidden"
+              style={{
+                background: 'radial-gradient(circle at 50% 0%, rgba(30,30,40,0.8) 0%, rgba(10,10,10,0.95) 100%)',
+              }}
             >
               {/* Close Button */}
               <button 
@@ -132,7 +135,7 @@ export default function StackSection({ stack }: StackSectionProps) {
 
                       <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                         {categoryItems.map((item) => (
-                          <StackIcon key={item.name} item={item} />
+                          <StackIcon key={item.name} item={item} alwaysColorful={true} />
                         ))}
                       </div>
                     </div>

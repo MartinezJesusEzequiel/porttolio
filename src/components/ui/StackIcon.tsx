@@ -6,19 +6,22 @@ import { useLanguage } from "@/context/LanguageContext";
 
 interface StackIconProps {
   item: StackItem;
+  alwaysColorful?: boolean;
 }
 
-export default function StackIcon({ item }: StackIconProps) {
+export default function StackIcon({ item, alwaysColorful = false }: StackIconProps) {
   const { lang } = useLanguage();
   const [isHovered, setIsHovered] = useState(false);
 
+  const active = alwaysColorful || isHovered;
+
   return (
     <div 
-      className="flex flex-col items-center justify-center gap-3 p-4 rounded-xl border border-white/5 bg-white/[0.01] transition-all duration-300 cursor-default"
+      className={`flex flex-col items-center justify-center gap-3 p-4 rounded-xl border transition-all duration-300 cursor-default ${alwaysColorful ? 'bg-white/[0.03]' : 'bg-white/[0.01]'}`}
       style={{
-        borderColor: isHovered ? `${item.color}50` : undefined,
-        backgroundColor: isHovered ? `${item.color}15` : undefined,
-        boxShadow: isHovered ? `0 0 20px ${item.color}20` : undefined,
+        borderColor: active ? `${item.color}50` : 'rgba(255,255,255,0.05)',
+        backgroundColor: active ? `${item.color}15` : undefined,
+        boxShadow: active ? `0 0 20px ${item.color}20` : undefined,
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -28,10 +31,10 @@ export default function StackIcon({ item }: StackIconProps) {
           src={`/icons/${item.icon}.svg`}
           alt=""
           aria-hidden="true"
-          className={`absolute inset-0 w-full h-full object-contain filter grayscale transition-opacity duration-300 ${isHovered ? 'opacity-0' : 'opacity-60'}`}
+          className={`absolute inset-0 w-full h-full object-contain filter grayscale transition-opacity duration-300 ${active ? 'opacity-0' : 'opacity-60'}`}
         />
         <div 
-          className={`absolute inset-0 transition-opacity duration-300 ${isHovered ? 'opacity-100 scale-110' : 'opacity-0 scale-100'}`}
+          className={`absolute inset-0 transition-opacity duration-300 ${active ? 'opacity-100 scale-110' : 'opacity-0 scale-100'}`}
           style={{
             backgroundColor: item.color || '#ffffff',
             WebkitMaskImage: `url(/icons/${item.icon}.svg)`,
@@ -49,7 +52,7 @@ export default function StackIcon({ item }: StackIconProps) {
       <div className="text-center z-10">
         <p 
           className="text-[11px] font-medium transition-colors duration-300"
-          style={{ color: isHovered ? item.color : '#a1a1aa' }}
+          style={{ color: active ? item.color : '#a1a1aa' }}
         >
           {item.name}
         </p>
