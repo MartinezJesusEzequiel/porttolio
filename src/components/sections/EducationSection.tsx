@@ -2,7 +2,7 @@
 
 import { EducationItem } from "@/types";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { motion } from "framer-motion";
+import SpotlightCard from "@/components/ui/SpotlightCard";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface EducationSectionProps {
@@ -18,13 +18,13 @@ export default function EducationSection({ education }: EducationSectionProps) {
 
       <div className="grid gap-4 sm:grid-cols-2 mt-12">
         {education.map((item, index) => (
-          <motion.article
+          <SpotlightCard
             key={item.title}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
-            className="bento-card p-6 flex flex-col justify-between"
+            className="p-6 flex flex-col justify-between"
           >
             <div>
               <div className="flex justify-between items-start mb-4">
@@ -55,7 +55,7 @@ export default function EducationSection({ education }: EducationSectionProps) {
                 </a>
               )}
             </div>
-          </motion.article>
+          </SpotlightCard>
         ))}
       </div>
     </section>

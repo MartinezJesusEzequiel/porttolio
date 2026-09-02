@@ -1,8 +1,8 @@
 "use client";
 
 import type { Project } from "@/types";
-import { motion } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
+import SpotlightCard from "@/components/ui/SpotlightCard";
 
 interface ProjectCardProps {
   project: Project;
@@ -14,12 +14,12 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
 
   if (project.featured) {
     return (
-      <motion.article
+      <SpotlightCard
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
-        className="w-full mb-6 bento-card overflow-hidden flex flex-col group md:col-span-2"
+        className="w-full mb-6 overflow-hidden flex flex-col group md:col-span-2"
       >
         <div className="w-full p-8 md:p-12 flex flex-col justify-between h-full">
           <div>
@@ -71,18 +71,18 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
             )}
           </div>
         </div>
-      </motion.article>
+      </SpotlightCard>
     );
   }
 
   // Normal Grid Card
   return (
-    <motion.article
+    <SpotlightCard
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
-      className="bento-card p-6 md:p-8 flex flex-col group h-full"
+      className="p-6 md:p-8 flex flex-col group h-full"
     >
       <div className="flex justify-between items-start mb-6">
         {project.mainLanguage && (
@@ -123,6 +123,6 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
           </span>
         ))}
       </div>
-    </motion.article>
+    </SpotlightCard>
   );
 }

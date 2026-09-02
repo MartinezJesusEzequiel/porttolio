@@ -49,9 +49,10 @@ export default function HeroSection({ profile }: HeroSectionProps) {
         <a href="#proyectos" className="px-8 py-3 rounded-full bg-white text-black font-medium hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.3)]">
           {t("hero.viewProjects")}
         </a>
-        <a href="/Ezequiel_Martinez_CV.pdf" download="Ezequiel_Martinez_CV.pdf" className="px-8 py-3 rounded-full border border-white/10 bg-white/5 text-white font-medium hover:bg-white/10 transition-colors flex items-center gap-2 group">
-          <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current text-zinc-400 group-hover:text-white transition-colors"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-          {t("hero.downloadCv")}
+        <a href="/Ezequiel_Martinez_CV.pdf" download="Ezequiel_Martinez_CV.pdf" className="relative overflow-hidden px-8 py-3 rounded-full border border-white/10 bg-white/5 text-white font-medium hover:bg-white/10 transition-colors flex items-center gap-2 group">
+          <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer pointer-events-none" />
+          <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current text-zinc-400 group-hover:text-white transition-colors relative z-10"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          <span className="relative z-10">{t("hero.downloadCv")}</span>
         </a>
       </motion.div>
 
