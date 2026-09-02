@@ -8,11 +8,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 
 const categories = [
-  { id: "backend", label: "Backend", enLabel: "Backend" },
+  { id: "language", label: "Lenguajes", enLabel: "Languages" },
   { id: "frontend", label: "Frontend", enLabel: "Frontend" },
+  { id: "backend", label: "Backend", enLabel: "Backend" },
   { id: "database", label: "Base de Datos", enLabel: "Database" },
   { id: "tool", label: "Herramientas", enLabel: "Tools" },
-  { id: "language", label: "Lenguajes", enLabel: "Languages" },
 ] as const;
 
 interface StackSectionProps {
