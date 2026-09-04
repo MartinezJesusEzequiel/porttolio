@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { EducationItem } from "@/types";
 import SectionHeading from "@/components/ui/SectionHeading";
 import SpotlightCard from "@/components/ui/SpotlightCard";
 import { useLanguage } from "@/context/LanguageContext";
+import PdfModal from "@/components/ui/PdfModal";
 
 interface EducationSectionProps {
   education: EducationItem[];
@@ -11,6 +13,7 @@ interface EducationSectionProps {
 
 export default function EducationSection({ education }: EducationSectionProps) {
   const { t, lang } = useLanguage();
+  const [activePdf, setActivePdf] = useState<string | null>(null);
 
   return (
     <section id="educacion" className="mb-24">
@@ -44,20 +47,25 @@ export default function EducationSection({ education }: EducationSectionProps) {
               </p>
 
               {item.certificateUrl && (
-                <a 
-                  href={item.certificateUrl} 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 mt-6 text-sm font-medium text-zinc-300 hover:text-white transition-colors"
+                <button 
+                  onClick={() => setActivePdf(item.certificateUrl!)}
+                  className="inline-flex items-center gap-2 mt-6 text-sm font-medium text-zinc-300 hover:text-white transition-colors cursor-pointer"
                 >
                   <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
                   {lang === "es" ? "Ver Certificado" : "View Certificate"}
-                </a>
+                </button>
               )}
             </div>
           </SpotlightCard>
         ))}
       </div>
+
+      <PdfModal
+        isOpen={!!activePdf}
+        onClose={() => setActivePdf(null)}
+        pdfUrl={activePdf || ""}
+        title={lang === "es" ? "Certificado" : "Certificate"}
+      />
     </section>
   );
 }

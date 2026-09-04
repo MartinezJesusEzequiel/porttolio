@@ -16,10 +16,9 @@ export default function Home() {
   return (
     <>
       <HeroSection profile={profileData} />
+      <ProjectsSection projects={projects} />
       <Divider />
       <StackSection stack={stack} />
-      <Divider />
-      <ProjectsSection projects={projects} />
       <Divider />
       <EducationSection education={educationData} />
       <ContactSection socialLinks={socialLinks} profile={profileData} />
